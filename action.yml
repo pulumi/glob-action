@@ -1,0 +1,22 @@
+name: 'Glob'
+description: 'Performs file operations on selections of files.'
+inputs:
+  operation:
+    required: true
+    description: |
+      The operation to perform on the selected files.
+      Currently only supports "copy".
+  files:
+    description: |
+      List of glob patterns of the files to operate on. This can be a multi-line input with multiple patterns.
+      For full details of the patterns supported, see: https://github.com/mrmlnc/fast-glob#pattern-syntax
+  source:
+    description: Directory within which to search for files.
+    required: false
+    default: "."
+  destination:
+    required: false
+    description: Destination, required for the "copy" operation.
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
