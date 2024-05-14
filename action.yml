@@ -17,6 +17,9 @@ inputs:
   destination:
     required: false
     description: Destination, required for the "copy" operation.
+outputs:
+  count:
+    description: Number of files matched.
 runs:
   using: 'node20'
   main: 'dist/index.js'
