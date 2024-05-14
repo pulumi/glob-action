@@ -21,3 +21,9 @@ GitHub action for performing file operations on selections of files.
     # Destination, required for the "copy" operation.
     destination: dest
 ```
+
+### Outputs
+
+| Name | Description | Example |
+| - | - | - |
+| `count` | Number of files matched. | `13` |

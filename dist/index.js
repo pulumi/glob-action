@@ -32190,12 +32190,13 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.copy = void 0;
+var action = __importStar(__nccwpck_require__(2186));
 var glob = __importStar(__nccwpck_require__(3664));
 var fs_1 = __nccwpck_require__(7147);
 var path_1 = __nccwpck_require__(1017);
 function copy(src, paths, dest) {
     return __awaiter(this, void 0, void 0, function () {
-        var matches, _a, matches_1, matches_1_1, file, fileStr, srcPath, destPath, destDir, e_1_1;
+        var matches, count, _a, matches_1, matches_1_1, file, fileStr, srcPath, destPath, destDir, e_1_1;
         var _b, e_1, _c, _d;
         return __generator(this, function (_e) {
             switch (_e.label) {
@@ -32203,7 +32204,9 @@ function copy(src, paths, dest) {
                     if (paths.length === 0) {
                         paths = ["**"];
                     }
+                    action.debug("Expanding paths:\n".concat(paths.join("\n")));
                     matches = glob.globStream(paths, { cwd: src, onlyFiles: true });
+                    count = 0;
                     _e.label = 1;
                 case 1:
                     _e.trys.push([1, 6, 7, 12]);
@@ -32219,10 +32222,12 @@ function copy(src, paths, dest) {
                     srcPath = (0, path_1.join)(src, fileStr);
                     destPath = (0, path_1.join)(dest, fileStr);
                     destDir = (0, path_1.dirname)(destPath);
+                    action.debug("Copying ".concat(srcPath, " to ").concat(destPath));
                     // Ensure dir exists
                     (0, fs_1.mkdirSync)(destDir, { recursive: true });
                     // Copy file
                     (0, fs_1.copyFileSync)(srcPath, destPath, fs_1.constants.COPYFILE_EXCL);
+                    count++;
                     _e.label = 4;
                 case 4:
                     _a = true;
@@ -32244,7 +32249,9 @@ function copy(src, paths, dest) {
                     if (e_1) throw e_1.error;
                     return [7 /*endfinally*/];
                 case 11: return [7 /*endfinally*/];
-                case 12: return [2 /*return*/];
+                case 12:
+                    action.debug("Copied ".concat(count, " files"));
+                    return [2 /*return*/, count];
             }
         });
     });
@@ -32322,7 +32329,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var action = __importStar(__nccwpck_require__(2186));
 var copy_1 = __nccwpck_require__(7402);
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var source, filesPatterns, operation, _a, destination, error_1;
+    var source, filesPatterns, operation, _a, destination, count, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -32342,7 +32349,8 @@ var copy_1 = __nccwpck_require__(7402);
                 }
                 return [4 /*yield*/, (0, copy_1.copy)(source, filesPatterns, destination)];
             case 2:
-                _b.sent();
+                count = _b.sent();
+                action.setOutput("count", count);
                 return [3 /*break*/, 4];
             case 3: throw new Error("Invalid operation: ".concat(operation));
             case 4: return [3 /*break*/, 6];

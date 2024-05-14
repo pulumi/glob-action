@@ -13,7 +13,8 @@ import { copy } from "./copy";
         if (destination === "") {
           throw new Error("destination is required for the copy operation.");
         }
-        await copy(source, filesPatterns, destination);
+        const count = await copy(source, filesPatterns, destination);
+        action.setOutput("count", count);
         break;
       default:
         throw new Error(`Invalid operation: ${operation}`);
