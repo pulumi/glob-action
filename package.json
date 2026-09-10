@@ -8,6 +8,9 @@
     "build": "ncc build src/index.ts -o dist",
     "prepublish": "npm run build"
   },
+  "engines": {
+    "node": ">=24"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
